@@ -28,3 +28,30 @@ double havensineDistance(location *loc1, location *loc2) {
 	double distance = R * c;
 	return distance;
 }
+
+//ll** convertToArr(ll *l) {
+//	if(!l) {
+//		return NULL;
+//	}
+//	ll **orders = (ll**)malloc(numOfMockOrders*sizeof(ll*));
+//	ll *t = l;
+//	int i = 0;
+//
+//	while(t) {
+//		orders[i++] = t;
+//		t = t->next;
+//	}
+//	return orders;
+//}
+
+ll* convertToLL(deliveryExecutive **deliveryExecutivesArr, int len) {
+	if(!deliveryExecutivesArr) {
+		return NULL;
+	}
+	ll *t = NULL;
+
+	for(int i=0; i<len; i++) {
+		t = addNode(t, deliveryExecutivesArr[i]);
+	}
+	return t;
+}

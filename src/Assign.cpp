@@ -44,11 +44,15 @@ void Assign::filter() {
 		perror("DeliveryExecutives || Orders found null");
 	}
 	for(int i=0; i<numOfMockOrders; i++) {
+		deliveryExecutive *deliveryExecutivesArr[numOfMockDE];
+		int k = 0;
 		for(int j=0; j<numOfMockDE; j++) {
 			if(havensineDistance(_orders[i]->loc, _deliveryExecutives[j]->loc) <= _serviceRadius) {
-				_orders[i]->DEList = addNode(_orders[i]->DEList, _deliveryExecutives[j]);
+				deliveryExecutivesArr[k++] = _deliveryExecutives[j];
 			}
 		}
+		sort(deliveryExecutivesArr, k);
+		_orders[i]->DEList = convertToLL(deliveryExecutivesArr, k);
 	}
 }
 

@@ -11,12 +11,11 @@
 int main() {
 	Assign assign;
 
-	assign.mockInputs();
-	assign.setServiceRadius(SERVICE_RADIUS);
-	assign.filter();
 	Algorithm *algo = assign.getAlgorithm();
 	assign.setAlgorithm(algo);
-	assign.sort();
+	assign.setServiceRadius(SERVICE_RADIUS);
+	assign.mockInputs();
+	assign.filter();
 	assign.map();
 	assign.print();
 

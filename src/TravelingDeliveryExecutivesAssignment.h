@@ -10,7 +10,7 @@ using namespace std;
 
 #define numOfMockDE 5
 #define numOfMockOrders 10
-#define SERVICE_RADIUS 25 //KMs
+#define SERVICE_RADIUS 10 //KMs
 
 struct ll;
 struct location;
@@ -26,6 +26,10 @@ class Assign;
 
 ll* addNode(ll*, deliveryExecutive*);
 double havensineDistance(location*, location*);
+ll** convertToArr(ll*);
+ll* convertToLL(deliveryExecutive**, int);
+int cmpFnNearestMile(const void*, const void*);
+int cmpFnMaxWaitDelay(const void*, const void*);
 
 struct ll {
 	ll *next;
@@ -73,18 +77,18 @@ struct assignment {
 
 class Algorithm {
 	public:
-		virtual void sort() = 0;
+		virtual void sort(deliveryExecutive**, int) = 0;
 		virtual ~Algorithm(){};
 };
 
 class NearestMileAlgorithm : public Algorithm {
 	public:
-		void sort();
+		void sort(deliveryExecutive**, int);
 };
 
 class MaxWaitDelayAlgorithm : public Algorithm {
 	public:
-		void sort();
+		void sort(deliveryExecutive**, int);
 };
 
 class Assign {
@@ -100,14 +104,14 @@ class Assign {
 		void setServiceRadius(double);
 		void mockInputs();
 		void print();
-		void sort();
+		void sort(deliveryExecutive**, int);
 		void map();
 		void filter();
 
-		Assign() {
-			_algorithm = NULL;
-			_deliveryExecutives = NULL;
-			_orders = NULL;
-			_assignments = NULL;
-		}
+//		Assign() {
+//			_algorithm = NULL;
+//			_deliveryExecutives = NULL;
+//			_orders = NULL;
+//			_assignments = NULL;
+//		}
 };
