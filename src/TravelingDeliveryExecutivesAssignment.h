@@ -10,12 +10,33 @@ using namespace std;
 
 #define numOfMockDE 5
 #define numOfMockOrders 10
+#define SERVICE_RADIUS 25 //KMs
+
+struct ll;
+struct location;
+struct timeInMins;
+struct order;
+struct deliveryExecutive;
+struct assignment;
+
+class Algorithm;
+class NearestMileAlgorithm;
+class MaxWaitDelayAlgorithm;
+class Assign;
+
+ll* addNode(ll*, deliveryExecutive*);
+double havensineDistance(location*, location*);
+
+struct ll {
+	ll *next;
+	deliveryExecutive *_deliveryExecutive;
+};
 
 struct location {
 	double lattitude;
 	double longitude;
 
-	location(double _lat, double _long): lattitude(_lat), longitude(_long){}
+	location(double _lat, double _long): lattitude(_lat), longitude(_long) {}
 };
 
 struct timeInMins {
@@ -28,9 +49,10 @@ struct order {
 	location *loc;
 	long ID;
 	timeInMins *timeOfOrderPlaced;
+	ll *DEList;
 
 	order(){}
-	order(location *_loc, timeInMins *_timeInMins, long _ID) : loc(_loc), ID(_ID), timeOfOrderPlaced(_timeInMins){}
+	order(location *_loc, timeInMins *_timeInMins, long _ID) : loc(_loc), ID(_ID), timeOfOrderPlaced(_timeInMins), DEList(NULL) {}
 };
 
 struct deliveryExecutive {
@@ -39,16 +61,14 @@ struct deliveryExecutive {
 	timeInMins *timeOfOrderDelivered;
 
 	deliveryExecutive(){}
-	deliveryExecutive(location *_loc, timeInMins *_timeInMins, long _ID) : loc(_loc), ID(_ID), timeOfOrderDelivered(_timeInMins){}
+	deliveryExecutive(location *_loc, timeInMins *_timeInMins, long _ID) : loc(_loc), ID(_ID), timeOfOrderDelivered(_timeInMins) {}
 };
 
 struct assignment {
-	order _order;
-	deliveryExecutive _deliveryExecutive;
-};
+	order *_order;
+	deliveryExecutive *_deliveryExecutive;
 
-struct mapping {
-	assignment **assignments;
+	assignment(order *order, deliveryExecutive *deliveryExecutive) : _order(order), _deliveryExecutive(deliveryExecutive) {}
 };
 
 class Algorithm {
@@ -70,11 +90,24 @@ class MaxWaitDelayAlgorithm : public Algorithm {
 class Assign {
 	public:
 		Algorithm *_algorithm;
+		deliveryExecutive **_deliveryExecutives;
+		order **_orders;
+		assignment **_assignments;
+		double _serviceRadius;
 
-		void sort();
 		Algorithm* getAlgorithm();
 		void setAlgorithm(Algorithm*);
-		void mockInputs(deliveryExecutive**, order**);
-		mapping map(mapping*);
-		void print(mapping*);
+		void setServiceRadius(double);
+		void mockInputs();
+		void print();
+		void sort();
+		void map();
+		void filter();
+
+		Assign() {
+			_algorithm = NULL;
+			_deliveryExecutives = NULL;
+			_orders = NULL;
+			_assignments = NULL;
+		}
 };

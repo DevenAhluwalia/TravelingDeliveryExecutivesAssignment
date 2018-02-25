@@ -9,19 +9,16 @@
 #include "TravelingDeliveryExecutivesAssignment.h"
 
 int main() {
-	deliveryExecutive **deliveryExecutives = NULL;
-	order **orders = NULL;
-	mapping *mapping = NULL;
-
 	Assign assign;
 
-	assign.mockInputs(deliveryExecutives, orders);
-
+	assign.mockInputs();
+	assign.setServiceRadius(SERVICE_RADIUS);
+	assign.filter();
 	Algorithm *algo = assign.getAlgorithm();
 	assign.setAlgorithm(algo);
 	assign.sort();
-	assign.map(mapping);
-	assign.print(mapping);
+	assign.map();
+	assign.print();
 
 	return 0;
 }

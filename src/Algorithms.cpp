@@ -11,6 +11,8 @@ void Assign::sort() {
 	return _algorithm->sort();
 }
 
-void NearestMileAlgorithm::sort() {}
+void NearestMileAlgorithm::sort() {
+
+}
 
 void MaxWaitDelayAlgorithm::sort() {}
